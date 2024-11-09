@@ -82,8 +82,8 @@ const Newsfeed: NextPage = () => {
                   </time>
                 </div>
                 <div className="group relative">
-                  <div className="mt-3 flex justify-between">
-                    <h3 className="m-0 text-lg/6 font-semibold text-gray-900">{log.name}</h3>
+                  <div className="mt-1 flex flex-col flex-wrap justify-between sm:flex-row">
+                    <h3 className="my-2 text-lg/6 font-semibold text-gray-900">{log.name}</h3>
                     <Address address={log.ownerId} size="sm" />
                   </div>
                   <p className="mt-4 line-clamp-3 text-sm/6 text-gray-600">{log.story}</p>
@@ -91,7 +91,7 @@ const Newsfeed: NextPage = () => {
                 <div className="text-gray-600 text-sm/6">
                   Rewards:
                   {scaffoldConfig.tokens.map(token => (
-                    <span key={token.attribute} className="ml-5 inline-block">
+                    <span key={token.attribute} className="ml-4 inline-block">
                       {log[`${token.attribute.toLowerCase()}Amount` as keyof SqueezeLog]} {token.symbol}
                     </span>
                   ))}

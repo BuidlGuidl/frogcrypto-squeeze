@@ -42,7 +42,7 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
 
   return (
     <div className="py-10 px-6">
-      <h2 className="text-center text-4xl font-lindenHill tracking-wide">{token.name} Leaderboard</h2>
+      <h2 className="text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
       {!leaderboard && (
         <div className="flex items-center flex-col flex-grow pt-12">
           <div className="loading loading-dots loading-md"></div>
@@ -54,24 +54,26 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
         </div>
       )}
       {leaderboard && leaderboard.users.items.length && (
-        <table>
-          <thead>
-            <tr>
-              <th>Address</th>
-              <th>Rewards</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderboard.users.items.map((user: UserData) => (
+        <div className="mt-3 overflow-x-auto bg-white border border-gray-300">
+          <table className="table">
+            <thead>
               <tr>
-                <td>
-                  <Address address={user.id} size="sm" />
-                </td>
-                <td className="text-right">{user[`${token.attribute.toLowerCase()}Amount`]}</td>
+                <th>Address</th>
+                <th className="text-right">Rewards</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leaderboard.users.items.map((user: UserData) => (
+                <tr key={user.id}>
+                  <td>
+                    <Address address={user.id} size="sm" />
+                  </td>
+                  <td className="text-right">{user[`${token.attribute.toLowerCase()}Amount` as keyof UserData]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

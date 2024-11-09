@@ -230,10 +230,6 @@ const Home = () => {
     }
   };
 
-  if (!isConnected) {
-    return <ConnectButtonLayout />;
-  }
-
   let backgroundImageUrl = "/priest.jpg";
 
   if (isConnected && !z) {
@@ -253,70 +249,78 @@ const Home = () => {
   }
 
   return (
-    <main>
-      <div
-        className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('${backgroundImageUrl}')`,
-        }}
-      >
+    <main
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('/priest.jpg')`,
+      }}
+    >
+      {!isConnected && <ConnectButtonLayout />}
+      {isConnected && (
         <div
-          className={clsx("flex flex-col", {
-            "gap-4 mt-[32rem]": !z,
-          })}
+          className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('${backgroundImageUrl}')`,
+          }}
         >
-          {!z && (
-            <>
-              <button onClick={handleAuth} className="btn btn-neutral" disabled={isLoading}>
-                {!isLoading && "Connect Zupass"}
+          <div
+            className={clsx("flex flex-col", {
+              "gap-4 mt-[29rem]": !z,
+            })}
+          >
+            {!z && (
+              <>
+                <button onClick={handleAuth} className="btn btn-neutral" disabled={isLoading}>
+                  {!isLoading && "Connect Zupass"}
+                  {isLoading && (
+                    <>
+                      <span className="loading loading-spinner"></span> Connecting...
+                    </>
+                  )}
+                </button>
+                <RainbowKitCustomConnectButton />
+              </>
+            )}
+            {z && (
+              <button
+                onClick={handleSqueeze}
+                className={clsx("btn btn-neutral", {
+                  "mt-[25rem]": !isLoading && !story && !squeezedFrogName,
+                  "mt-[9rem]": isLoading,
+                })}
+                disabled={isLoading}
+              >
                 {isLoading && (
                   <>
-                    <span className="loading loading-spinner"></span> Connecting...
+                    <span className="loading loading-spinner"></span> Squeezing...
                   </>
                 )}
+                {!isLoading && !story && !squeezedFrogName && "Squeeze Frog"}
+                {!isLoading && story && squeezedFrogName && "Squeeze Another Frog"}
               </button>
-              <RainbowKitCustomConnectButton />
-            </>
-          )}
-          {z && (
-            <button
-              onClick={handleSqueeze}
-              className={clsx("btn btn-neutral", {
-                "mt-[28rem]": !isLoading && !story && !squeezedFrogName,
-                "mt-[12rem]": isLoading,
-              })}
-              disabled={isLoading}
-            >
-              {isLoading && (
-                <>
-                  <span className="loading loading-spinner"></span> Squeezing...
-                </>
-              )}
-              {!isLoading && !story && !squeezedFrogName && "Squeeze Frog"}
-              {!isLoading && story && squeezedFrogName && "Squeeze Another Frog"}
-            </button>
-          )}
-        </div>
-        <div>
-          {story && squeezedFrogName && squeezeReward && (
-            <>
-              <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
-                <div className="card-body p-6">
-                  <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
-                    The Tale of {squeezedFrogName}
-                  </h2>
-                  <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
+            )}
+          </div>
+          <div>
+            {story && squeezedFrogName && squeezeReward && (
+              <>
+                <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
+                  <div className="card-body p-6">
+                    <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
+                      The Tale of {squeezedFrogName}
+                    </h2>
+                    <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
-                <div className="p-2">
-                  <TokensRewards rewards={squeezeReward} />
+                <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
+                  <div className="p-2">
+                    <TokensRewards rewards={squeezeReward} />
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 };
