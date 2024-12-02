@@ -122,11 +122,11 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
             (attributes.beauty + 1) *
             temperamentMultiplier;
 
-        rarityTokenContract.mint(owner, rarityAmount);
-        jumpTokenContract.mint(owner, jumpAmount);
-        speedTokenContract.mint(owner, speedAmount);
-        intelligenceTokenContract.mint(owner, intelligenceAmount);
-        beautyTokenContract.mint(owner, beautyAmount);
+        rarityTokenContract.mint(owner, rarityAmount * 1 ether);
+        jumpTokenContract.mint(owner, jumpAmount * 1 ether);
+        speedTokenContract.mint(owner, speedAmount * 1 ether);
+        intelligenceTokenContract.mint(owner, intelligenceAmount * 1 ether);
+        beautyTokenContract.mint(owner, beautyAmount * 1 ether);
 
         emit Squeeze(
             attributes.frogId,
