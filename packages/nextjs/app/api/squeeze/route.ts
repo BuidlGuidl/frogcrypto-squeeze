@@ -157,7 +157,7 @@ export async function POST(req: Request) {
       description,
     });
 
-    const { address: contractAddress, abi: contractAbi } = deployedContracts[mainNetwork.id].FrogCryptoSqueeze;
+    const { address: contractAddress, abi: contractAbi } = deployedContracts[mainNetwork.id].FrogCryptoSqueezeV2;
     const hash = await walletClient.writeContract({
       address: contractAddress,
       abi: contractAbi,

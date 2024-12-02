@@ -14,10 +14,6 @@ contract PotionToken is ERC20, AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function decimals() public pure override returns (uint8) {
-        return 0;
-    }
-
     function transferOwnership(address newOwner) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(!hasRole(DEFAULT_ADMIN_ROLE, newOwner), "Ownable: new owner already have admin role");
 
