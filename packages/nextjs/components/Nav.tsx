@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { BeakerIcon, HomeIcon, PresentationChartBarIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import {
+  BeakerIcon,
+  CodeBracketSquareIcon,
+  HomeIcon,
+  PresentationChartBarIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 
 export function Nav() {
   const pathname = usePathname();
@@ -35,6 +41,11 @@ export function Nav() {
           <li>
             <Link href="/usersLeaderboard">
               <PresentationChartBarIcon className="w-6 h-6" />
+            </Link>
+          </li>
+          <li>
+            <Link href="https://github.com/BuidlGuidl/frogcrypto-squeeze" target="_blank">
+              <CodeBracketSquareIcon className="w-6 h-6" />
             </Link>
           </li>
         </ul>
