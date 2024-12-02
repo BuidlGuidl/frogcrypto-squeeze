@@ -4,7 +4,7 @@ import { TTokenInfo } from "~~/types/frog";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 export const JuiceSlot = ({ balance = "0", token }: { balance?: string; token: TTokenInfo }) => {
-  const { data } = useTokenContractInfo(`FrogCrypto${token.attribute}Token` as ContractName);
+  const { data } = useTokenContractInfo(`FrogCrypto${token.attribute}TokenV2` as ContractName);
 
   return (
     <a href={`https://abi.ninja/${data?.address}/8453?methods=balanceOf`} target="_blank">
