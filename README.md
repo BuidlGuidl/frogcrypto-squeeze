@@ -1,4 +1,49 @@
-# 🏗 Scaffold-ETH 2
+# 🐸 FrogCrypto Squeeze
+
+![frogjuice fun_ (1)](https://github.com/user-attachments/assets/3c1780a3-5518-4aad-b1e6-3dcc95274a46)
+
+---
+
+**FrogCrypto Squeeze** is a prototype application that allows you to squeeze your **CryptoFrogs** inside your **Zupass**. These frogs were minted during **Devcon 7** and can now be interacted with through this fun and engaging web application.
+
+Try it out live here: [https://frogjuice.fun/](https://frogjuice.fun/)
+
+![frogjuice fun_ (3)](https://github.com/user-attachments/assets/5c2b8bbe-2498-4b29-92ac-ed5330b8ff73)
+
+
+
+## 🐸 What Are CryptoFrogs?
+
+CryptoFrogs are unique, programmable cryptographic collectibles introduced at **Devcon 7**. They were minted as part of an initiative to introduce attendees to programmable cryptography in a fun and engaging way. These frogs can now be squeezed using this application, adding a playful layer of interaction to the collectibles.
+
+## 🚀 Features
+
+- **Zupass Integration**: Seamlessly connect your Zupass to interact with your CryptoFrogs.
+- **Frog Squeezing**: A playful and interactive way to engage with your frogs.
+- **On-Chain Proof Verification**: Built with cutting-edge cryptographic proof verification to ensure secure and transparent interactions.
+
+
+## 🛠️ Implementation Details
+
+This project leverages **on-chain GPC proof verification** to ensure secure and verifiable interactions with CryptoFrogs. The implementation is based on the following principles:
+
+1. **Zupass Integration**: The application uses Zupass, a decentralized identity and proof system, to authenticate users and verify ownership of CryptoFrogs.
+2. **On-Chain Proofs**: The squeezing process involves generating and verifying cryptographic proofs directly on-chain, ensuring transparency and trust.
+2. **Frontend Circuit Data**: The frontend retrieves the circuit data required to send to the smart contract for verification. You can find the relevant code [here](https://github.com/BuidlGuidl/frogcrypto-squeeze/blob/a694e147a8f1d55df270471e1174761a4a52ec7f/packages/nextjs/app/page.tsx#L155).
+3. **Smart Contract Verification**: The smart contract verifies the proof data sent from the frontend. The verification logic is implemented [here](https://github.com/BuidlGuidl/frogcrypto-squeeze/blob/main/packages/hardhat/contracts/FrogCryptoSqueeze.sol#L143).
+
+This architecture ensures that the ownership of CryptoFrogs is provable and verifiable in a decentralized manner.
+
+For more technical details, refer to the **pending final Notion link**.
+
+
+## 🌐 Live Demo
+
+Check out the live application here: [https://frogjuice.fun/](https://frogjuice.fun/)
+
+---
+
+## 🏗 This application uses Scaffold-ETH 2
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
@@ -25,56 +70,59 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
-## Quickstart
+## 📦 Installation
 
-To get started with Scaffold-ETH 2, follow the steps below:
+To run the project locally, follow these steps:
 
-1. Install dependencies if it was skipped in CLI:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/BuidlGuidl/frogcrypto-squeeze.git
+   cd frogcrypto-squeeze
+   ```
 
-```
-cd my-dapp-example
-yarn install
-```
+2. Copy `packages/nextjs/.env.example` to `packages/nextjs/.env` and fill environment variables values.
 
-2. Run a local network in the first terminal:
+3. Install dependencies:
+   ```bash
+   yarn install
+   ```
 
-```
+4. Start the Ponder server:
+   ```bash
+   yarn ponder:dev
+   ```
+
+5. Start the development server:
+   ```bash
+   yarn start
+   ```
+
+6. Open your browser and navigate to `http://localhost:3000`.
+
+If you want to run the contracts locally:
+
+1. Run a local network:
+
+```bash
 yarn chain
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
+2. Deploy contracts:
 
-3. On a second terminal, deploy the test contract:
-
-```
+```bash
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+3. Change `packages/nextjs/scaffold.config.ts` targetNetworks.
 
-4. On a third terminal, start your NextJS app:
+---
 
-```
-yarn start
-```
+## 🤝 Contributing
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request.
 
-Run smart contract test with `yarn hardhat:test`
+---
 
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
+## 📜 License
 
-
-## Documentation
-
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
