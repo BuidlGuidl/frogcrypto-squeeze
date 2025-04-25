@@ -115,6 +115,9 @@ yarn deploy
 
 3. Change `packages/nextjs/scaffold.config.ts` targetNetworks.
 
+4. Change Ponder *startBlock* on `packages/ponder/ponder.config.ts`.
+
+
 ---
 
 ## 🤝 Contributing
