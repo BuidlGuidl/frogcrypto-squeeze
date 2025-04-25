@@ -175,6 +175,11 @@ const Home = () => {
           message: `You are signing that you own ${frogName} at timestamp ${timestamp} on https://frogcrypto-squeeze.com`,
         });
 
+        const reversedPiB: [any[], any[]] = [
+          result.proof.pi_b[0]?.slice().reverse() || [],
+          result.proof.pi_b[1]?.slice().reverse() || [],
+        ];
+
         // Send data to backend
         const response = await fetch("/api/squeeze", {
           method: "POST",
@@ -185,7 +190,7 @@ const Home = () => {
             {
               proof: {
                 pi_a: result.proof.pi_a.slice(0, -1),
-                pi_b: result.proof.pi_b.slice(0, -1),
+                pi_b: reversedPiB,
                 pi_c: result.proof.pi_c.slice(0, -1),
                 pubSignals: pubSignals,
               },
