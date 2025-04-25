@@ -30,7 +30,7 @@ This project leverages **on-chain GPC proof verification** to ensure secure and 
 1. **Zupass Integration**: The application uses Zupass, a decentralized identity and proof system, to authenticate users and verify ownership of CryptoFrogs.
 2. **On-Chain Proofs**: The squeezing process involves generating and verifying cryptographic proofs directly on-chain, ensuring transparency and trust.
 2. **Frontend Circuit Data**: The frontend retrieves the circuit data required to send to the smart contract for verification. You can find the relevant code [here](https://github.com/BuidlGuidl/frogcrypto-squeeze/blob/a694e147a8f1d55df270471e1174761a4a52ec7f/packages/nextjs/app/page.tsx#L155).
-3. **Smart Contract Verification**: The smart contract verifies the proof data sent from the frontend. The verification logic is implemented [here](https://github.com/BuidlGuidl/frogcrypto-squeeze/blob/main/packages/hardhat/contracts/FrogCryptoSqueeze.sol#L143).
+3. **Smart Contract Verification**: The smart contract verifies the proof data sent from the front end. First, it verifies known constants, then the attributes, and finally, the proof. The verification logic is implemented [here](https://github.com/BuidlGuidl/frogcrypto-squeeze/blob/main/packages/hardhat/contracts/FrogCryptoSqueeze.sol#L84).
 
 This architecture ensures that the ownership of CryptoFrogs is provable and verifiable in a decentralized manner.
 
