@@ -58,11 +58,6 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
     event Enabled(address indexed caller);
     event Disabled(address indexed caller);
 
-    modifier verifiedProof(ProofArgs calldata proof) {
-        require(this.verifyProof(proof._pA, proof._pB, proof._pC, proof._pubSignals), "Invalid proof");
-        _;
-    }
-
     constructor(
         address rarityTokenAddress,
         address jumpTokenAddress,
@@ -85,8 +80,14 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
     ) public {
         require(enabled, "Squeezing is not enabled");
 
-        // First verify the proof and attributes
+        // First verify the constants
+        require(verifyPubSignalKnownConstants(proof), "Invalid known constants");
+
+        // Then verify the attributes
         require(verifyFrogAttributes(proof, attributes), "Invalid frog attributes");
+
+        // And finally verify the proof
+        require(this.verifyProof(proof._pA, proof._pB, proof._pC, proof._pubSignals), "Invalid proof");
 
         require(
             squeezeTimestamps[attributes.frogId] + 1 days < block.timestamp,
@@ -143,9 +144,6 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
     function verifyFrogAttributes(ProofArgs calldata proof, FrogAttributes calldata attrs) public view returns (bool) {
         uint256[60] memory pubSignals = proof._pubSignals;
 
-        // Verify FrogCrypto signer
-        require(pubSignals[12] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
-
         uint256[1] memory input;
 
         // Verify beauty
@@ -155,6 +153,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         // Verify biome
         input[0] = attrs.biome;
         require(this.hash(input) == pubSignals[1], "Invalid biome value");
+
+        // Offset 2 is the description, we don't need to verify it
 
         // verify frogId
         input[0] = attrs.frogId;
@@ -168,6 +168,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         input[0] = attrs.jump;
         require(this.hash(input) == pubSignals[5], "Invalid jump value");
 
+        // Offset 6 is the name, we don't need to verify it
+
         // Verify owner
         input[0] = attrs.owner;
         require(this.hash(input) == pubSignals[7], "Invalid owner value");
@@ -180,8 +182,81 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         input[0] = attrs.speed;
         require(this.hash(input) == pubSignals[9], "Invalid speed value");
 
+        // Verify temperament
         input[0] = attrs.temperament;
-        require(this.hash(input) == pubSignals[10], "Invalid speed value");
+        require(this.hash(input) == pubSignals[10], "Invalid temperament value");
+
+        return true;
+    }
+
+    function verifyPubSignalKnownConstants(ProofArgs calldata proof) public pure returns (bool) {
+        uint256[60] memory pubSignals = proof._pubSignals;
+
+        require(
+            pubSignals[11] == 21888242871839275222246405745257275088548364400416034343698204186575808495616,
+            "Invalid known constant 11"
+        );
+
+        // Verify FrogCrypto signer
+        require(pubSignals[12] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
+
+        // Fixed values for indices 13 to 59
+        uint256[47] memory fixedValues = [
+            21888242871839275222246405745257275088548364400416034343698204186575808495616,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            320469162396708332516033932244029190181315114284264408621970394677041964715,
+            79811696653591665733987051350844413541610759479683385956516607740051690419,
+            355166872430925829725279673336652965404834009932046877642532049371080064209,
+            131784857445920278807149809616705815466379358159709139801848746703275797463,
+            281816578944984323586893082955502346500813215897786536562124638649161032021,
+            190563830761898862018106264927787031412916351705218672411626223525427995849,
+            230817354225034729219104242291752751725751467730056472112085822421181653966,
+            134391921332508560099964544679493715295561887371159641958333364222734962117,
+            353266386363935664439509954355717614533254106148005157507977650263408718488,
+            331813365179563087827748601718945520853733728907634595064819635670819214786,
+            220503421335407425308639442017232224940359242843979015945964974707193355771,
+            2047,
+            2,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            8191,
+            21888242871839275222246405745257275088548364400416034343698204186575808495616,
+            21888242871839275222246405745257275088548364400416034343698204186575808495616,
+            0,
+            0,
+            0,
+            0,
+            0,
+            21888242871839275222246405745257275088548364400416034343698204186575808495616
+        ];
+
+        for (uint256 i = 13; i <= 59; i++) {
+            require(
+                pubSignals[i] == fixedValues[i - 13],
+                string(abi.encodePacked("Invalid known constant at index ", i))
+            );
+        }
 
         return true;
     }
