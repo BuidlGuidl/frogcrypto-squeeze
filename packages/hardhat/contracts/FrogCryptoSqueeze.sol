@@ -154,6 +154,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         input[0] = attrs.biome;
         require(this.hash(input) == pubSignals[1], "Invalid biome value");
 
+        // Offset 2 is the description, we don't need to verify it
+
         // verify frogId
         input[0] = attrs.frogId;
         require(this.hash(input) == pubSignals[3], "Invalid frogId value");
@@ -165,6 +167,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         // Verify jump
         input[0] = attrs.jump;
         require(this.hash(input) == pubSignals[5], "Invalid jump value");
+
+        // Offset 6 is the name, we don't need to verify it
 
         // Verify owner
         input[0] = attrs.owner;
@@ -178,8 +182,9 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         input[0] = attrs.speed;
         require(this.hash(input) == pubSignals[9], "Invalid speed value");
 
+        // Verify temperament
         input[0] = attrs.temperament;
-        require(this.hash(input) == pubSignals[10], "Invalid speed value");
+        require(this.hash(input) == pubSignals[10], "Invalid temperament value");
 
         return true;
     }
