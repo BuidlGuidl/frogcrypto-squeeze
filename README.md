@@ -34,7 +34,7 @@ This project leverages **on-chain GPC proof verification** to ensure secure and 
 
 This architecture ensures that the ownership of CryptoFrogs is provable and verifiable in a decentralized manner.
 
-For more technical details, refer to the **pending final Notion link**.
+For more technical details, refer to https://www.notion.so/0xparc/On-Chain-GPC-Proof-Verification-1dd71e0a542080eea9a7d463d40758cd
 
 
 ## 🌐 Live Demo
